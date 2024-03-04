@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<section class="membership-section section-padding"><div class="container"><div class="row"><div class="col-lg-5 col-12 mx-auto">
+<form action="{% url 'moviedb:addamovie' %}" method="post" class="custom-form membership-form shadow-lg" role="form">{% csrf_token %}
+<h4 class="text-white mb-4">Add a movie: {{msg}}</h4>
+
+<div class="form-floating"><input type="text" name="name" class="form-control" placeholder="Movie Name"><label>Movie Name</label></div>
+<div class="form-floating"><input type="text" name="desc" class="form-control" placeholder="Movie Description"><label>Movie Description</label></div>
+<div class="form-floating"><input type="text" name="actors" class="form-control" placeholder="Actors"><label>Actors</label></div>
+<div class="form-floating"><input type="url" name="utubelink" class="form-control" placeholder="Trailer Link"><label>Trailer Link</label></div>
+<div class="form-floating"><input type="file" name="pict" class="form-control" placeholder="Poster"><label>Poster</label></div>
+<div class="form-floating"><input type="date" name="released" class="form-control" placeholder="Release Date"><label>Release Date</label></div>
+<div class="input-group dropdown">
+<label style="color:white;">Choose a category</label>
+<select  class="form-control" name="category" size="4" multiple>
+{% for c in categories %}
+    <option value="{{c.name}}">{{c.name}}</option>
+{% endfor %}
+</select>
+</div>
+
+
+    <button type="submit" class="form-control">Add</button>
+</div></form></div></div></div></section>
+{% endblock %}

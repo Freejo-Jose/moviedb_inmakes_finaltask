@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+        <main>
+<!--###################-->
+           <div class="row"><div class="col">
+<!--####################-->
+<section class="hero-section d-flex justify-content-center align-items-center" id="section_1">
+<div class="section-overlay"></div>
+<div class="container"><div class="row"><div class="col-lg-6 col-12 mb-5 mb-lg-0">
+<h1 class="cd-headline rotate-1 mb-4 pb-2">
+<span class="cd-words-wrapper">
+<b class="is-visible">Movie DB welcomes {% if user.is_authenticated %} '{{user }}' {% else %} You {% endif %}!</b>
+<b>{% if user.is_authenticated %} Rate movies {% else %} Login to rate movies {% endif %}!</b>
+</span>
+</h1><br><hr>
+<h4 class="cd-headline rotate-1 text-red mb-4 pb-2">
+<span class="cd-words-wrapper">
+<b class="is-visible">For best reviews</b>
+<b>For best movies</b>
+<b>For best recommendations</b>
+</span>
+</h4>
+</div></div></div></section>
+<!--###################--></div><!--###################-->
+               {% if user.is_authenticated %} !
+               <div class="col"><!--###################-->
+<section class="hero-section  justify-content-center align-items-center" id="section_2">
+<a class="btn btn-primary" href="{% url 'moviedb:addamovie' %}" role="button">Add a movie</a><br>
+<a class="btn btn-primary" href="{% url 'moviedb:viewmodmovie' %}" role="button">View/Modify your movies</a><br><br>
+<a class="btn btn-success" href="{% url 'moviedb:addagenre' %}" role="button">Add a category</a><br>
+<a class="btn btn-success" href="{% url 'moviedb:viewmodgenre' %}" role="button">View/Modify your category</a><br><br>
+<a class="btn btn-warning" href="{% url 'moviedb:viewmodprofile' %}" role="button">View/Modify Profile</a><br><br>
+<a class="btn btn-danger" href="{% url 'moviedb:findmovies' %}" role="button">Find movies to rate and review</a><br>
+<a class="btn btn-danger" href="{% url 'moviedb:movcatwise' %}" role="button">Movies category-wise</a><br><br>
+<a class="btn btn-danger" href="{% url 'moviedb:favs' %}" role="button">Your favourites</a><br><br>
+</section>
+               <!--###################--></div>{% endif %}<!--###################--></div></main>{% endblock %}

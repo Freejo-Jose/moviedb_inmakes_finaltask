@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+<section class="section-padding" style="padding-left:3rem"><div class="container"><div class="row"><div class="col-lg-5 col-12 ">
+    <b class="text" style="color:red;">{{msg}}</b>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit">
+</form></div></div></div></section>
+{% endblock %}

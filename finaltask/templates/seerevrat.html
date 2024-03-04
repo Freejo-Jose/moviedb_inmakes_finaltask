@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+<section class="section-padding" style="padding-left:3rem"><div class="container"><div class="row"><div class="col-lg-5 col-12 ">
+<table class="table table-danger">
+  <thead><tr><b style="color:red;">{{msg}}</b></tr>
+    <tr>{% if ratobj %}
+      <th scope="col">Review</th>
+      <th scope="col">Rating</th>
+      {%endif%}
+    </tr>
+  </thead>
+  <tbody>{% for r in ratobj %}
+    <tr>
+      <td>{{r.review}}</td>
+      <td>{{r.rating}}</td>
+      <td><a href="{% url 'moviedb:ratenreview' r.name.id %}">Rate/Review</a></td>
+    </tr>{%endfor%}
+  </tbody>
+</table>
+
+
+
+</div></div></div></section>
+{% endblock %}

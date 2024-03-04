@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+<section class="section-padding" style="padding-left:3rem"><div class="container"><div class="row"><div class="col-lg-5 col-12 ">
+<table class="table table-danger">
+  <thead><tr><b style="color:red;">{{msg}}</b></tr>
+    <tr>{% if u %}
+      <th scope="col">User Name</th>
+      <th scope="col">Email</th>
+            <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+
+      {% else %}<th scope="col">No user details to show.</th>{%endif%}
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{u.username}}</td>
+      <td>{{u.email}}</td>
+      <td>{{u.first_name}}</td>
+      <td>{{u.last_name}}</td>
+
+      <td><a href="{% url 'moviedb:modprofile'%}">Modify</a></td>
+      <td><a href="{% url 'moviedb:chgpwd'%}">Change Password</a></td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+</div></div></div></section>
+{% endblock %}

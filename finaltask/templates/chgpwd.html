@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<section class="membership-section section-padding"><div class="container"><div class="row"><div class="col-lg-5 col-12 mx-auto">
+<form action="{% url 'moviedb:chgpwd' %}" method="post" class="custom-form membership-form shadow-lg" role="form">{% csrf_token %}
+<h4 class="text-white mb-4">{{msg}}</h4>
+<h4 class="text-white mb-4">Change Password:</h4>
+
+<div class="form-floating"><input type="text" name="password" class="form-control" placeholder="New Password"><label>New Password</label></div>
+
+
+    <button type="submit" class="form-control">Change Password</button>
+</div></form></div></div></div></section>
+{% endblock %}

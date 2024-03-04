@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+<section class="section-padding" style="padding-left:3rem"><div class="container"><div class="row"><div class="col-lg-5 col-12 ">
+<table class="table table-danger">
+  <thead><tr><b style="color:red;">{{msg}}</b></tr>
+    <tr>{% if categories %}
+      <th scope="col">Category Name</th>
+      <th scope="col">Category Description</th>
+      <th scope="col">Poster</th>      {% else %}<th scope="col">No Categories to show.</th>{%endif%}
+
+    </tr>
+  </thead>
+  <tbody>
+  {% for c in categories %}
+  {%if c.name %}
+    <tr>
+      <td>{{c.name}}</td>
+      <td>{{c.desc}}</td>
+      <td><img src="{% if c.pict %}{{c.pict.url}}{%else%}{%static 'images/noimage.png'%}{%endif%}" width="100" height="100"></td>
+      <td><a href="{% url 'moviedb:delcat' c.id %}">Delete</a></td>
+      <td><a href="{% url 'moviedb:modcat' c.id %}">Modify</a></td>
+    </tr>
+
+
+
+
+
+  {%endif%}{%endfor%}
+  </tbody>
+</table>
+
+
+
+</div></div></div></section>
+{% endblock %}

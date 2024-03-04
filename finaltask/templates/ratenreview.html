@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<section class="membership-section section-padding"><div class="container"><div class="row"><div class="col-lg-5 col-12 mx-auto">
+<form action="{% url 'moviedb:ratenreview' m.id %}" method="post" class="custom-form membership-form shadow-lg" role="form">{% csrf_token %}
+<h4 class="text-red mb-4" style="color:red;">{{msg}}</h4>
+<h5 class="text-white mb-4">Rate this movie</h5>
+<h7 class="text-white mb-4">Name: '{{m.name}}'</h7><br>
+<h7 class="text-white mb-4">Category: '{{m.category.name}}'</h7><br>
+<h7 class="text-white mb-4">Description: '{{m.desc}}'</h7><br>
+<h7 class="text-white mb-4">Actors: '{{m.actors}}'</h7><br>
+
+<div class="form-floating"><input type="text" name="review" class="form-control" placeholder="Movie Review"><label>Movie Review</label></div>
+<div class="input-group dropdown">
+    <label class="text-white"><pre>Your rating </pre></label>
+<select class="form-control" name="rating" size="5" multiple>
+   {% for i in '123456789' %}
+    <option value="{{i}}">{{i}}</option>
+    {% endfor %}
+    <option value="10">10</option>
+</select>
+</div>
+
+
+    <button type="submit" class="form-control">Submit Review</button>
+</div></form></div></div></div></section>
+{% endblock %}

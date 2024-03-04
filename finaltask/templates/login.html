@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block body %}
+<section class="contact-section section-padding" id="section_5"><div class="container"><div class="row"><div class="col-lg-5 col-12">
+<form action="{% url 'moviedb:login' %}" method="post" class="custom-form contact-form">{% csrf_token %}<h2 class="mb-4 pb-2">Login: {{msg}}</h2>
+<div class="row">
+<div class="col-lg-6 col-md-6 col-12"><div class="form-floating"><input type="text" name="uname" id="Username" class="form-control" placeholder="Username"><label >Username</label></div></div>
+<div class="col-lg-6 col-md-6 col-12"><div class="form-floating"><input type="password" name="pwd" id="Password" class="form-control" placeholder="Password"><label >Password</label></div></div>
+<div class="col-lg-12 col-12"><button type="submit" class="form-control">Login</button></div></div>
+</form>
+</div><div class="col-lg-6 col-12"><div class="contact-info mt-5"><img src="{% static 'images/WorldMap.svg' %}" class="img-fluid" ></div></div></div></div></section>
+
+{% endblock %}

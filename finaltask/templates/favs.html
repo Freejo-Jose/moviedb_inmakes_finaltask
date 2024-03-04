@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+{% if favs %}
+<section class="section-padding" style="padding-left:3rem"><div class="container"><div class="row"><div class="col-lg-5 col-12 ">
+  <table class="table table-danger">
+  <thead><tr><h4 style="color:red;">{{msg}}</h4></tr>
+    <tr>
+      <th scope="col">Movie Name</th>
+      <th scope="col">Movie Description</th>
+      <th scope="col">Poster</th>
+      <th scope="col">Actors</th>
+      <th scope="col">Trailer</th>
+      <th scope="col">Category</th>
+      <th scope="col">Released</th>
+      <th scope="col">Updated</th>
+    </tr>
+  </thead>
+  <tbody>{% for f in favs %}
+    <tr>
+      <td>{{f.movie.name}}</td>
+      <td>{{f.movie.desc}}</td>
+      <td><img src="{% if f.movie.pict %}{{f.movie.pict.url}}{%else%}{%static 'images/noimage.png'%}{%endif%}" width="100" height="100"></td>
+      <td>{{f.movie.actors}}</td>
+      <td><a href="{{f.movie.utubelink}}">Watch</a></td>
+      <td>{{f.movie.category.name}}</td>
+      <td>{{f.movie.released}}</td>
+      <td>{{f.movie.updated}}</td>
+      <td><a href="{% url 'moviedb:ratenreview' f.movie.id %}">Rate/Review</a></td>
+      <td><a href="{% url 'moviedb:addfav' f.movie.id %}">Add to my favorites</a></td>
+      <td><a href="{% url 'moviedb:seerevrat' f.movie.id %}">See ratings/reviews</a></td>
+    </tr>{%endfor%}
+  </tbody>
+</table>
+
+
+</div></div></div></section>{%else%}{{msg}}{%endif%}
+{% endblock %}
