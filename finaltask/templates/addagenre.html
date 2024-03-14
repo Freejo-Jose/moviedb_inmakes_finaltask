@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block body %}
-<section class="membership-section section-padding"><div class="container"><div class="row"><div class="col-lg-5 col-12 mx-auto">
-<form action="{% url 'moviedb:addagenre' %}" method="post" class="custom-form membership-form shadow-lg" role="form">{% csrf_token %}
-<h4 class="text-white mb-4">{{msg}}</h4>
-<h4 class="text-white mb-4">Add a Movie Category:</h4>
+<div class="container"><div class="row"><div class="col-lg-5 col-12 mx-auto">
+<form action="{% url 'addagenre' %}" method="post" class="custom-form membership-form shadow-lg" role="form" enctype="multipart/form-data">{% csrf_token %}
+<h4 class="text-success mb-4">{{msg}}</h4>
+<h4 class="text-success mb-4">Add a Genre:</h4>
 
-<div class="form-floating"><input type="text" name="name" class="form-control" placeholder="Category Name"><label>Category Name</label></div>
-<div class="form-floating"><input type="text" name="desc" class="form-control" placeholder="Category Description"><label>Category Description</label></div>
-<div class="form"><input type="file" name="pict" class="form-control" placeholder="Poster"><label>Poster</label></div>
+<div class="form-floating"><input type="text" name="name" class="form-control" placeholder="Genre"><label>Genre</label></div>
+<div class="form-floating"><input type="text" name="desc" class="form-control" placeholder="Description"><label>Description</label></div>
+<div class="form"><label>Add a Poster</label><input type="file" name="pict" class="form-control" placeholder="Poster"></div>
 
 
-    <button type="submit" class="form-control">Add</button>
-</div></form></div></div></div></section>
+    <button type="submit" class="form-control btn btn-success">Add Genre</button>
+</div></form></div></div></div>
 {% endblock %}

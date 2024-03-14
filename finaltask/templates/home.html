@@ -1,9 +1,54 @@
-{% extends 'base.html' %}{% load static %}
+{% extends 'base.html' %}
+{% load static %}
 
 {% block body %}
 
-{% for msg in messages %}
-{{msg}}
-{% endfor %}
-Home
-{% endblock %}
+    <div class="container-xxl bg-white p-0">
+
+
+
+        <!-- Header Start -->
+        <div class="container-fluid header bg-white p-0">
+            <div class="row g-0 align-items-center flex-column-reverse flex-md-row">
+                <div class="col-md-6 p-5 mt-lg-5">
+
+                    {% if loginsuccess%}<img src="{%static 'img/gif.gif'%}" height="300px" width="400px">
+                    {%else%}
+                                        <h1 class="display-5 animated fadeIn mb-4">Find A <span class="text-success">Perfect Movie</span> To Watch With Your Family And Friends</h1>
+
+                                        <p class="animated fadeIn mb-4 pb-2">Explore a diverse cinematic universe at our movie library, where every genre comes to life. Immerse yourself in an extensive collection of timeless classics, thrilling blockbusters, and hidden gems. From heartwarming dramas to edge-of-your-seat adventures, discover a world of storytelling at your fingertips. Movie magic awaits your every click.
+                    </p>
+
+                    {% if user.is_authenticated %}
+                    <a href="{%url 'allmovies' 1%}" class="btn btn-success py-3 px-5 me-3 animated fadeIn">Explore</a>
+                    {%else%}<a href="{%url 'register'%}" class="btn btn-success py-3 px-5 me-3 animated fadeIn">Register</a>{%endif%}{%endif%}
+                        <br><h2 class="text-success mb-4 pb-2">{{msg}}</h2>
+
+                </div>
+                <div class="col-md-6 animated fadeIn">
+                    <div class="owl-carousel header-carousel">
+                        <div class="owl-carousel-item">
+                            <img class="img-fluid" src={%static "img/ca1.jpg"%} alt="">
+                        </div>
+                        <div class="owl-carousel-item">
+                            <img class="img-fluid" src={% static "img/ca2.jpg"%} alt="">
+                        </div>
+                        <div class="owl-carousel-item">
+                            <img class="img-fluid" src={% static "img/ca3.jpg"%} alt="">
+                        </div>
+                        <div class="owl-carousel-item">
+                            <img class="img-fluid" src={%static "img/ca4.jpg"%} alt="">
+                        </div>
+                        <div class="owl-carousel-item">
+                            <img class="img-fluid" src={% static "img/ca5.jpg"%} alt="">
+                        </div>
+                        <div class="owl-carousel-item">
+                            <img class="img-fluid" src={% static "img/ca6.jpg"%} alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Header End -->
+
+{% endblock%}

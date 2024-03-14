@@ -15,7 +15,7 @@
     <tr>
       <td>{{r.review}}</td>
       <td>{{r.rating}}</td>
-      <td><a href="{% url 'moviedb:ratenreview' r.name.id %}">Rate/Review</a></td>
+      <td><a href="{% url 'ratenreview' r.name.id %}">Rate/Review</a></td>
     </tr>{%endfor%}
   </tbody>
 </table>

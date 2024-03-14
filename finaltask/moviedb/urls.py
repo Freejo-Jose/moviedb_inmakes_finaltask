@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-app_name='moviedb'
+
 urlpatterns = [
     path('', views.home, name='home'),
     path('register/', views.register, name='register'),
@@ -22,6 +22,10 @@ urlpatterns = [
     path('addfav/<int:movid>/', views.addfav, name='addfav'),
     path('movcatwise/', views.movcatwise, name='movcatwise'),
     path('favs/', views.favs, name='favs'),
+    path('allgenres/', views.allgenres, name='allgenres'),
+    path('allmovies/<int:page>/', views.allmovies, name='allmovies'),
+    path('genre/<int:cid>/', views.genre, name='genre'),
+    path('moviedetails/<int:mid>/', views.moviedetails, name='moviedetails'),
     path('seerevrat/<int:movid>/', views.seerevrat, name='seerevrat'),
 
 

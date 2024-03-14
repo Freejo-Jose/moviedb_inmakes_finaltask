@@ -1,23 +1,66 @@
 {% load static %}
-<nav class="navbar navbar-expand-lg" style="background-color:black;">
 
-<div class="container">
-<div class="navbar-brand d-flex align-items-center"><a href="{%url 'moviedb:home'%}"><img src="{% static 'images/lll.jpg' %}"></div>
 
-<a class="navbar-brand d-flex align-items-center" href="{%url 'moviedb:home'%}">
-    <div class="d-none d-lg-block ms-lg-3" class="btn  custom-border-btn">Movie Database</div></a>
-<div class="row" style="position:relative;float: right;">
-    <div class="col d-none d-lg-block ms-lg-3"><a class="btn custom-btn custom-border-btn" href="{% url 'moviedb:home' %}" role="button">Home</a></div>
 
-    {% if user.is_authenticated %}
-<div class="col d-none d-lg-block ms-lg-3"><a class="btn custom-btn custom-border-btn" role="button">{{user}} logged in</a></div>
-<div class="col d-none d-lg-block ms-lg-3"><a class="btn custom-btn custom-border-btn" href="{% url 'moviedb:logout' %}" role="button">Logout</a></div>
-{% else %}
-<div class="col d-none d-lg-block ms-lg-3"><a class="btn custom-btn custom-border-btn" href="{% url 'moviedb:login' %}" role="button">Login</a></div>
-    {% endif %}
-    {% if regsuccess %}
-<div class="col d-none d-lg-block ms-lg-3"><a class="btn custom-btn custom-border-btn" role="button">{{uname}} registered successfully</a></div>
-{% else %}
-<div class="col d-none d-lg-block ms-lg-3"><a class="btn custom-btn custom-border-btn" href="{% url 'moviedb:register' %}" role="button" >Register</a></div>
-    {% endif %}
-</div></div></nav>
+        <!-- Navbar Start -->
+        <div class="container-fluid nav-bar">
+            <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
+                <a href="{%url 'home'%}" class="navbar-brand d-flex align-items-center text-center">
+                    <div class="hover-zoom icon p-2 me-2">
+                        <img src="{%static 'img/moga-icon.png'%}" alt="Icon" height="44px" width="44px">
+                    </div>
+                    <h1 class="m-0 text-success">Movies Galore</h1>
+                </a>
+
+
+
+
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto">
+                        <a href="{%url 'home'%}" class="nav-item nav-link active"><img src="{%static 'img/homeicon.png'%}" width=25px height=25px>Home</a>
+
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><img src="{%static 'img/moviesicon.png'%}" width=25px height=25px>Movies</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <a href="{%url 'allmovies' 1 %}" class="dropdown-item ">All Movies</a>
+                                <a href="{%url 'allgenres'%}" class="dropdown-item ">All Movies by Genre</a>
+                                <div class="dropdown-divider"></div>
+                                <a href="{%url 'addamovie'%}" class="dropdown-item  {%if user.is_authenticated %}{%else%}disabled{%endif%}">Add Movie</a>
+                                <a href="{%url 'viewmodmovie'%}" class="dropdown-item  {%if user.is_authenticated %}{%else%}disabled{%endif%}">Modify Movie</a>
+                            </div>
+                        </div>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><img src="{%static 'img/genresicon.png'%}" width=25px height=25px>Genres</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                               <a href="{%url 'allgenres'%}" class="dropdown-item ">All Genres</a>
+                                <div class="dropdown-divider"></div>
+                                 <a href="{%url 'addagenre'%}" class="dropdown-item {%if user.is_authenticated %}{%else%}disabled{%endif%}">Add Genre</a>
+                                <a href="{%url 'viewmodgenre'%}" class="dropdown-item  {%if user.is_authenticated %}{%else%}disabled{%endif%}">Modify Genre</a>
+                            </div>
+                        </div>
+
+{%if user.is_authenticated %}
+<div class="nav-item dropdown">
+<a  class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><img src="{%static 'img/loggedinicon.png'%}" width=25px height=25px>{{user.username}}</a>
+<div class="dropdown-menu rounded-0 m-0">
+<a href="{%url 'viewmodprofile'%}" class="dropdown-item ">Your Profile</a>
+<a href="{%url 'chgpwd'%}" class="dropdown-item ">Change Password</a>
+</div>
+</div>
+<div class="navbar-nav ms-auto">
+    <a href="{%url 'logout'%}" class="nav-item nav-link active" ><img src="{%static 'img/logouticon.png'%}" width=25px height=25px>Logout</a></div>{%else%}
+<div class="navbar-nav ms-auto"><a href="{%url 'login'%}"  class="nav-item nav-link active"><img src="{%static 'img/loginicon.png'%}" width=25px height=25px>Login</a></div>{%endif%}
+
+<div style="display:block;padding-top:20px;height:30px;">
+ <form  action="{% url 'findmovies' %}" method="get" enctype="multipart/form-data">{% csrf_token %}
+<input  name="q" placeholder="Search Movies" >
+<button type="submit" style="background-color:white;">
+<img  src="{%static 'img/search-icon.png'%}"  width=20px height=20px>
+     </button>
+</form></div>
+
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <!-- Navbar End -->

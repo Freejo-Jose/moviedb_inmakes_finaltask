@@ -1,59 +1,29 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block body %}
-<section class="membership-section section-padding" style="padding-bottom:0rem;"><div class="container"><div class="row"><div class="col-lg-5 col-12 mx-auto">
-<form action="{% url 'moviedb:findmovies' %}" method="get" class="custom-form membership-form shadow-lg" role="form">{% csrf_token %}
-<h4  style="color:red;">{{msg}}</h4>
-<h4 class="text-white mb-4">Find movies:</h4>
+<div class="container">
+                        <div class="row g-4">
+<br><h4 class="text-success d-flex justify-content-center">{{msg}}</h4>
 
-<div class="form-floating"><input type="text" name="q" class="form-control" placeholder="Find movies"><label>Search movies</label></div>
+<!--                            loop start-->{%for m in movies%}
+                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="{%url 'moviedetails' m.id%}"><img src="{{m.pict.url}}" width="300rem" height="300rem"></a>
+                                        <div class="bg-white rounded-top text-success position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
+                                            {{m.category.name}}</div>
+                                    </div>
+                                    <div class="p-4 pb-0">
+                                        <p class="text-success mb-3">{{m.released}}</p>
+                                        <h5><a class="text-success d-block h5 mb-2" href="{%url 'moviedetails' m.id%}">{{m.name}}</a></h5>
+                                        <p class="text-success mb-3">{{m.actors}}</p>
+                                    </div>
+                                </div>
+                            </div>
+<!--                            loop end-->{%endfor%}
+                        </div>
+                    </div>
 
+        <!-- Property List End -->
 
-    <button type="submit" class="form-control">Search</button>
-</div></form></div></div></div></section>
-
-<div class="section-padding" style="padding-top:1rem"><div class="row" ><div class="col-lg-5 col-12 ">
-<table class="table table-warning">
-  <thead><tr><b style="color:red;">{{msg}}</b></tr>
-    <tr>
-      {% if movies  %}<th scope="col">Movie Name</th>
-      <th scope="col">Movie Description</th>
-      <th scope="col">Poster</th>
-      <th scope="col">Actors</th>
-      <th scope="col">Trailer</th>
-      <th scope="col">Category</th>
-      <th scope="col">Released</th>
-      <th scope="col">Updated</th>
-      {% else %}<th scope="col">No Movies to show.</th>{%endif%}
-    </tr>
-  </thead>
-  <tbody>
-  {% for m in movies %}
-  {%if m.name %}
-    <tr>
-      <td>{{m.name}}</td>
-      <td>{{m.desc}}</td>
-      <td><img src="{% if m.pict %}{{m.pict.url}}{%else%}{%static 'images/noimage.png'%}{%endif%}" width="100" height="100"></td>
-      <td>{{m.actors}}</td>
-      <td><a href="{{m.utubelink}}">Watch</a></td>
-      <td>{{m.category.name}}</td>
-      <td>{{m.released}}</td>
-      <td>{{m.updated}}</td>
-
-      <td><a href="{% url 'moviedb:ratenreview' m.id %}">Rate/Review</a></td>
-      <td><a href="{% url 'moviedb:addfav' m.id %}">Add to my favorites</a></td>
-      <td><a href="{% url 'moviedb:seerevrat' m.id %}">See ratings/reviews</a></td>
-    </tr>
-
-
-
-
-
-  {%endif%}{%endfor%}
-  </tbody>
-</table>
-
-
-
-</div></div></div></div>
 {% endblock %}

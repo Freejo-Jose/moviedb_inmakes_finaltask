@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class Category(models.Model):
     name=models.CharField(max_length=250,unique=True,blank=False,null=False)
     desc=models.TextField(blank=True)
-    pict=models.ImageField(upload_to='category',blank=True)
+    pict=models.ImageField(upload_to='category',blank=False,null=False)
     user=models.ForeignKey(User,on_delete=models.CASCADE,blank=True)
     class Meta:
         ordering=['name','desc','user']
@@ -19,9 +19,9 @@ class Movie(models.Model):
     desc = models.TextField(blank=True)
     actors = models.TextField(blank=True)
     utubelink = models.TextField(blank=True)
-    pict = models.ImageField(upload_to='movieposter', blank=True)
+    pict = models.ImageField(upload_to='movieposter',blank=False,null=False)
     category = models.ForeignKey(Category, on_delete=models.CASCADE,blank=True)
-    released = models.DateTimeField(blank=True)
+    released = models.DateField(blank=True)
     updated = models.DateTimeField(auto_now=True)
     user=models.ForeignKey(User, on_delete=models.CASCADE,blank=True)
     class Meta:

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+
+    <div class="container-xxl bg-white p-0">
+        <!-- Category Start -->
+        <div class="container-xxl py-5">
+            <div class="container">
+                <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                    <h1 class="text-success mb-3">All Genres</h1>
+                    <p>Embark on a cinematic journey through our diverse movie genres. From heartwarming romances to pulse-pounding thrillers, our library boasts a kaleidoscope of options. Explore captivating dramas, laugh-out-loud comedies, and mind-bending sci-fi. Whatever your mood, immerse yourself in an array of genres, each promising a unique and unforgettable viewing experience.
+                    </p>
+                </div>
+                <div class="row g-4">
+                    {% for c,ml in allgenres.items %}
+
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="{%url 'genre' c.id %}">
+                            <div class="rounded p-4">
+                                <div class="icon mb-3">
+                                    <img class="img-fluid" src={{c.pict.url}} alt="Icon">
+                                </div>
+                                <h6>{{c.name}}</h6>
+                                <span>{{ml.count}} Movies</span>
+                            </div>
+                        </a>
+                    </div>
+                    {%endfor%}
+
+
+                </div>
+            </div>
+        </div>
+        <!-- Category End -->
+
+    </div>
+{% endblock%}

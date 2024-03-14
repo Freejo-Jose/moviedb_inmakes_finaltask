@@ -5,14 +5,14 @@
 <section class="section-padding" style="padding-left:3rem"><div class="container"><div class="row"><div class="col-lg-5 col-12 ">
 {% for k,v in catmov.items %}
   <table class="table table-danger">
-  <thead><tr><h4 style="color:red;">movies of category '{{k.name}}'</h4></tr>
+  <thead><tr><h4 style="color:red;">Movies of Genre '{{k.name}}'</h4></tr>
     <tr>
       <th scope="col">Movie Name</th>
       <th scope="col">Movie Description</th>
       <th scope="col">Poster</th>
       <th scope="col">Actors</th>
       <th scope="col">Trailer</th>
-      <th scope="col">Category</th>
+      <th scope="col">Genre</th>
       <th scope="col">Released</th>
       <th scope="col">Updated</th>
     </tr>
@@ -27,9 +27,9 @@
       <td>{{m.category.name}}</td>
       <td>{{m.released}}</td>
       <td>{{m.updated}}</td>
-            <td><a href="{% url 'moviedb:ratenreview' m.id %}">Rate/Review</a></td>
-      <td><a href="{% url 'moviedb:addfav' m.id %}">Add to my favorites</a></td>
-      <td><a href="{% url 'moviedb:seerevrat' m.id %}">See ratings/reviews</a></td>
+            <td><a href="{% url 'ratenreview' m.id %}">Rate/Review</a></td>
+      <td><a href="{% url 'addfav' m.id %}">Add to my favorites</a></td>
+      <td><a href="{% url 'seerevrat' m.id %}">See ratings/reviews</a></td>
     </tr>{%endfor%}
   </tbody>
 </table>

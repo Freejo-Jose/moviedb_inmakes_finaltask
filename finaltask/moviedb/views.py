@@ -8,7 +8,7 @@ from .models import Category, Movie, Rating, Favorites
 from .forms import Categoryform,Movieform,Userform
 
 def home(request):
-    return render(request,'index.html')
+    return render(request,'home.html')
 
 def register(request):
     if request.user.is_authenticated:
@@ -52,12 +52,12 @@ def login(request):
         user=auth.authenticate(username=uname,password=pwd)
         if user is not None:
             auth.login(request,user)
-            msg=f'User {uname} logged in successfully'
+            msg=f"User '{uname}' Logged in successfully"
             loginsuccess=True
             print(msg)
-            return render(request,'index.html',{'msg':msg,'loginsuccess':loginsuccess,'uname':uname})
+            return render(request,'home.html',{'msg':msg,'loginsuccess':loginsuccess,'uname':uname})
         else:
-            msg='invalid username or password'
+            msg='Invalid Username or Password! Try Again.'
             print(msg)
             return render(request,'login.html',{'msg':msg,'loginsuccess':loginsuccess,'uname':uname})
     return render(request, 'login.html', {'msg': msg, 'loginsuccess': loginsuccess, 'uname': uname})
@@ -65,10 +65,11 @@ def login(request):
 
 def logout(request):
     logoutsuccess=True
+    u=request.user.username
     auth.logout(request)
-    msg='logged out successfully'
+    msg=f"Log out Done:'{u}'"
     print(msg)
-    return render(request, 'index.html', {'msg': msg, 'logoutsuccess': logoutsuccess})
+    return render(request, 'home.html', {'msg': msg, 'logoutsuccess': logoutsuccess})
 
 
 def addamovie(request):
@@ -85,7 +86,7 @@ def addamovie(request):
         user = User.objects.get(username=request.user.username)
         movobject = Movie(name=name, desc=desc, pict=pict,user=user,actors=actors,utubelink=utubelink,category=category,released=released)
         movobject.save()
-        msg=f"movie '{name}' added successfully"
+        msg=f"Movie '{name}' added successfully"
     return render(request, 'addamovie.html',{'msg':msg,'categories':categories})
 
 def addagenre(request):
@@ -97,7 +98,7 @@ def addagenre(request):
         user = User.objects.get(username=request.user.username)
         catobject = Category(name=name, desc=desc, pict=pict,user=user)
         catobject.save()
-        msg=f"movie category '{name}' added successfully"
+        msg=f"Genre '{name}' added successfully"
     return render(request, 'addagenre.html',{'msg':msg})
 
 def viewmodgenre(request,msg=''):
@@ -107,7 +108,7 @@ def delcat(request,catid):
     catobj=Category.objects.get(id=catid)
     name=catobj.name
     catobj.delete()
-    msg = f"Category '{name}' deleted successfully"
+    msg = f"Genre '{name}' deleted successfully"
     return viewmodgenre(request,msg=msg)
 def modcat(request,catid):
     msg=''
@@ -116,7 +117,7 @@ def modcat(request,catid):
     if form.is_valid():
         name=cat.name
         form.save()
-        msg = f"Category '{name}' modified successfully"
+        msg = f"Genre '{name}' modified successfully"
     return render(request, 'modcat.html',{'msg':msg,'form':form})
 def viewmodmovie(request,msg=''):
     movies=Movie.objects.all().filter(user=request.user)
@@ -125,7 +126,7 @@ def delmov(request,movid):
     movobj=Movie.objects.get(id=movid)
     name=movobj.name
     movobj.delete()
-    msg = f"Category '{name}' deleted successfully"
+    msg = f"Movie '{name}' deleted successfully"
     return viewmodmovie(request,msg=msg)
 def modmov(request,movid):
     msg=''
@@ -155,14 +156,18 @@ def chgpwd(request,msg=''):
         u = User.objects.get(username=name)
         u.set_password(request.POST.get('password'))
         u.save()
-        msg=f"Password for '{name}' changed successfully"
+        auth.logout(request)
+        msg=f"Password for '{name}' changed successfully. Please Re-login with new password"
+        return render(request, 'login.html', {'msg': msg, 'loginsuccess': False, 'uname': ''})
     return render(request, 'chgpwd.html',{'msg':msg})
-def findmovies(request,msg=''):
+def findmovies(request):
+    msg = 'Sorry! Thats an Invalid Search Query! Please Search Again!'
     movies=None
     if 'q' in request.GET:
         query=request.GET.get('q')
-        movies=Movie.objects.all().filter( Q(name__contains=query) | Q(desc__contains=query)| Q(actors__contains=query) )
-        msg=f"Query '{query}' gave '{movies.count()}' results"
+        if len(query)!=0:
+            movies=Movie.objects.all().filter( Q(name__contains=query) | Q(desc__contains=query)| Q(actors__contains=query) )
+            msg=f"Your Search Query '{query}' gave '{movies.count()}' Movie Results"
     return render(request,'findmovies.html',{'movies':movies,'msg':msg})
 def ratenreview(request,movid,msg=''):
     m = Movie.objects.get(id=movid)
@@ -208,7 +213,38 @@ def seerevrat(request,movid):
 def favs(request):
     favs=Favorites.objects.all().filter(user=request.user)
     if favs:
-        msg='You have no movies in favorites list'
+        msg="You have '{favs.count()}' movies in favorites list"
     else:
         msg="You have '{favs.count()}' movies in favorites list"
     return render(request, 'favs.html', {'msg': msg,'favs':favs})
+def allgenres(request):
+    allcats=Category.objects.all()
+    allgenres=dict()
+    msg=''
+    if allcats.count():
+        msg= f"{allcats.count()} Genres found!"
+        for c in allcats:
+            allmovs=Movie.objects.all().filter(category=c)
+            if allmovs:
+                allgenres[c]=allmovs
+    return render(request, 'allgenres.html', {'msg': msg,'allgenres':allgenres})
+def allmovies(request,page=1):
+    m=Movie.objects.all()
+    totalnoofmovies = m.count()
+    lastpage=1+(totalnoofmovies//9)
+    if page!=lastpage:
+        allmovies=m[(page-1)*9:page*9]
+        lastpagebool=False
+    elif page==lastpage:
+        allmovies=m[(page-1)*9:]
+        lastpagebool=True
+    nextpage=page+1
+    return render(request, 'allmovies.html', {'nextpage': nextpage,'lastpagebool':lastpagebool,'allmovies':allmovies})
+def genre(request,cid):
+    genre=Category.objects.get(id=cid)
+    allmovies=Movie.objects.all().filter(category__id=cid)
+    return render(request, 'genre.html', {'allmovies':allmovies,"genre":genre})
+def moviedetails(request,mid):
+    m = Movie.objects.get(id=mid)
+    m.utubelink = m.utubelink.replace("watch?v=", "embed/")
+    return render(request, 'moviedetails.html', {'m':m})

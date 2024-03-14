@@ -2,13 +2,16 @@
 {% load static %}
 {% block body %}
 
-<section class="section-padding" style="padding-left:3rem"><div class="container"><div class="row"><div class="col-lg-5 col-12 ">
-<table class="table table-danger">
+<div class="container"><div class="row"><div class="col-lg-5 col-12 ">
+<table class="table table-success">
   <thead><tr><b style="color:red;">{{msg}}</b></tr>
     <tr>{% if categories %}
-      <th scope="col">Category Name</th>
-      <th scope="col">Category Description</th>
-      <th scope="col">Poster</th>      {% else %}<th scope="col">No Categories to show.</th>{%endif%}
+      <th scope="col">Genre Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Poster</th>         <th scope="col">Delete</th>
+      <th scope="col">Modify</th>
+
+      {% else %}<th scope="col">No Genres to show.</th>{%endif%}
 
     </tr>
   </thead>
@@ -18,20 +21,11 @@
     <tr>
       <td>{{c.name}}</td>
       <td>{{c.desc}}</td>
-      <td><img src="{% if c.pict %}{{c.pict.url}}{%else%}{%static 'images/noimage.png'%}{%endif%}" width="100" height="100"></td>
-      <td><a href="{% url 'moviedb:delcat' c.id %}">Delete</a></td>
-      <td><a href="{% url 'moviedb:modcat' c.id %}">Modify</a></td>
-    </tr>
-
-
-
-
-
-  {%endif%}{%endfor%}
+      <td><img src="{{c.pict.url}}" width="100" height="100"></td>
+      <td><a href="{% url 'delcat' c.id %}"><img src="{%static 'img/deleteicon.png'%}" width="25px" height="25px"></a></td>
+      <td><a href="{% url 'modcat' c.id %}"><img src="{%static 'img/modifyicon.png'%}" width="25px" height="25px"></a></td>
+    </tr>  {%endif%}{%endfor%}
   </tbody>
 </table>
-
-
-
-</div></div></div></section>
+</div></div></div>
 {% endblock %}

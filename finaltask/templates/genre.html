@@ -1,0 +1,38 @@
+ {% extends 'base.html' %}
+{% load static %}
+
+
+{% block body %}     <!-- About Start -->
+        <div class="container-xxl py-5">
+            <div class="container">
+                <div class="row g-5 align-items-center">
+                    <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+                        <div class="about-img position-relative overflow-hidden p-5 pe-0">
+                            <img class="img-fluid w-100" src="{{genre.pict.url}}">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                        <h1 class="mb-4 text-success">{{genre.name}}</h1>
+                        <h4 class="mb-4">{{genre.desc}}</h4>
+
+                    </div>
+                    <!--                            loop start-->{%for m in allmovies%}
+                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="{%url 'moviedetails' m.id %}"><img src="{{m.pict.url}}" width="300rem" height="300rem"></a>
+                                        <div class="bg-white rounded-top text-success position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
+                                            {{m.category.name}}</div>
+                                    </div>
+                                    <div class="p-4 pb-0">
+                                        <h5 class="text-success mb-3">{{m.released}}</h5>
+                                        <a class="text-success d-block h5 mb-2" href="{%url 'moviedetails' m.id %}">{{m.name}}</a>
+                                        <p class="text-success mb-3">{{m.actors}}</p>
+                                    </div>
+                                </div>
+                            </div>
+<!--                            loop end-->{%endfor%}
+                </div>
+            </div>
+        </div>
+        <!-- About End -->{%endblock%}

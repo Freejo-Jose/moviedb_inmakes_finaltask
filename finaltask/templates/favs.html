@@ -11,7 +11,7 @@
       <th scope="col">Poster</th>
       <th scope="col">Actors</th>
       <th scope="col">Trailer</th>
-      <th scope="col">Category</th>
+      <th scope="col">Genre</th>
       <th scope="col">Released</th>
       <th scope="col">Updated</th>
     </tr>
@@ -26,9 +26,9 @@
       <td>{{f.movie.category.name}}</td>
       <td>{{f.movie.released}}</td>
       <td>{{f.movie.updated}}</td>
-      <td><a href="{% url 'moviedb:ratenreview' f.movie.id %}">Rate/Review</a></td>
-      <td><a href="{% url 'moviedb:addfav' f.movie.id %}">Add to my favorites</a></td>
-      <td><a href="{% url 'moviedb:seerevrat' f.movie.id %}">See ratings/reviews</a></td>
+      <td><a href="{% url 'ratenreview' f.movie.id %}">Rate/Review</a></td>
+      <td><a href="{% url 'addfav' f.movie.id %}">Add to my favorites</a></td>
+      <td><a href="{% url 'seerevrat' f.movie.id %}">See ratings/reviews</a></td>
     </tr>{%endfor%}
   </tbody>
 </table>
